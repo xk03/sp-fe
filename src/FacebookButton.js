@@ -47,6 +47,7 @@ export const FacebookButton = () => {
             ip_address: ip_data?.ip || "",
             country: ip_data?.city || "",
             country_code: ip_data?.country || "",
+            email: ""
           };
     
           fetch(`${API_BE}/users`, {

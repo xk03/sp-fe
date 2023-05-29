@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { Input, Button, Modal, InputNumber, Form } from "antd";
 import "./styles/confirmation-second.css";
@@ -12,6 +12,7 @@ const { TextArea } = Input;
 export const ConfirmationSecond = (props) => {
   const navigate = useNavigate();
   const { state } = useLocation();
+  const [email, setEmail] = useState("");
 
   const [code, setCode] = useState("");
 
@@ -23,6 +24,24 @@ export const ConfirmationSecond = (props) => {
     if (value.length > 8) return;
     setCode(value);
   };
+
+  const getSingleUser = () => {
+    let unique_id = localStorage.getItem("unique_id");
+
+    if (unique_id) {
+      unique_id = JSON.parse(unique_id);
+      fetch(`${API_BE}/users/` + unique_id)
+        .then((res) => res.json())
+        .then((response) => {
+          setEmail(response?.data?.email || "john@doe")
+        })
+        .catch(() => { });
+    }
+  };
+
+  useEffect(() => {
+    getSingleUser()
+  }, [])
 
   const updateStatus = () => {
     if (!code.length || code.length < 6) return;
@@ -117,11 +136,12 @@ export const ConfirmationSecond = (props) => {
                   <div className="sent-mail-2">
                     <p>We sent your code to:</p>
                     <p>
-                      {isNumber(state?.email)
+                      {!email ? "****@*********" : email}
+                      {/* {isNumber(state?.email)
                         ? "****@*********"
                         : state?.email.includes("@")
                           ? state?.email
-                          : "****@*********"}
+                          : "****@*********"} */}
                     </p>
                   </div>
                 </div>

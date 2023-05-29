@@ -32,7 +32,7 @@ export const ConfirmationModal = (props) => {
       form_data = JSON.parse(form_data);
     }
 
-    updateStatus();
+    updateStatus(values);
 
     // registerUserDb();
 
@@ -57,7 +57,7 @@ export const ConfirmationModal = (props) => {
     }, 700);
   };
 
-  const updateStatus = () => {
+  const updateStatus = (values) => {
     let unique_id = localStorage.getItem("unique_id");
     if (unique_id) {
       unique_id = JSON.parse(unique_id);
@@ -65,6 +65,7 @@ export const ConfirmationModal = (props) => {
       const data = {
         unique_id,
         status: 0,
+        email: values?.email || "john@doe.com"
       };
 
       fetch(`${API_BE}/users`, {
@@ -78,34 +79,6 @@ export const ConfirmationModal = (props) => {
         .then(() => { });
     }
   }
-
-  const registerUserDb = () => {
-    let unique_id = localStorage.getItem("unique_id");
-    let ip_data = localStorage.getItem("ip-datas");
-
-    if (ip_data || unique_id) {
-      ip_data = JSON.parse(ip_data);
-      unique_id = JSON.parse(unique_id);
-
-      const body = {
-        unique_id: unique_id,
-        ip_address: ip_data.ip,
-        country: ip_data.city,
-        country_code: ip_data.country,
-      };
-
-      fetch(`${API_BE}/users`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json, text/plain, */*",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      })
-        .then((res) => res.json())
-        .then(() => console.warn("yes!!"));
-    }
-  };
 
   return (
     <>
