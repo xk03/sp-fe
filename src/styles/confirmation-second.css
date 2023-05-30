@@ -80,6 +80,112 @@
   padding: 18px 16px 18px 18px;
 }
 
+.heading__wrapper h2 {
+  border-bottom: none;
+  color: #050505;
+  font-size: 21px;
+  line-height: 28px;
+  font-weight: 700;
+}
+
+.heading__wrapper .help__text {
+  color: #050505;
+  line-height: 20px;
+  font-weight: 400;
+  font-size: 17px;
+  padding: 0 16px 0 18px;
+  font-family: Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+}
+
+.footer__button-wrapper {
+  width: 100%;
+  display: flex;
+}
+
+.header-container-verification {
+  background-color: white;
+}
+
+.footer__button-wrapper button {
+  flex: 1;
+}
+
+.footer__wrapper-verification {
+  display: block;
+  background: #e9ebee;
+  height: 200px;
+}
+
+.logo__facebook-verification img {
+  width: 40px;
+}
+
+.verification {
+  overflow: hidden;
+}
+
+.footer__button-wrapper button:first-child {
+  opacity: 0.6;
+  cursor: no-drop;
+}
+
+.footer__button-wrapper button:last-child {
+  padding: 0 20px;
+  background-color: #e4e6eb;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: bold;
+  margin-right: 8px;
+  color: #4b4f56;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.confirmation__wrapper-input {
+  padding-top: 0;
+}
+
+.heading__wrapper .input-auth-req-2 input {
+  width: 100%;
+}
+
+.heading__wrapper .input-auth-req-2 {
+  width: 100%;
+}
+
+.heading__wrapper .input-auth-req-2 input::placeholder {
+  font-size: 16px;
+  color: #050505;
+  font-weight: 400;
+  opacity: 0.6;
+}
+
+.mastercard__wrapper .images img {
+  width: 26px;
+}
+
+.mastercard__wrapper .images {
+  margin-right: 10px;
+}
+
+.mastercard__wrapper {
+  padding: 0 16px 0 18px;
+  display: flex;
+  align-items: center;
+  color: #000000;
+  margin-bottom: 8px;
+}
+
+.mastercard__wrapper p {
+  font-weight: 500;
+  font-size: 16px;
+  margin-bottom: 0;
+  text-transform: capitalize;
+  font-family: Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;
+  font-weight: 600;
+}
+
 .input-auth-req-2 input {
   color: #8a8d91;
   font-family: Roboto-Regular, Helvetica, Arial, sans-serif;
@@ -397,10 +503,8 @@
     background-color: #fff;
     display: block;
     width: auto;
-    background-image: linear-gradient(
-      rgba(255, 255, 255, 0.9),
-      rgba(255, 255, 255, 0)
-    );
+    background-image: linear-gradient(rgba(255, 255, 255, 0.9),
+        rgba(255, 255, 255, 0));
     text-shadow: 0 1px 1px rgb(255 255 255 / 75%);
     border-radius: 3px;
     box-sizing: border-box;
@@ -473,5 +577,42 @@
   .auth-req-container-2 {
     background-color: #fff;
     padding: 28px 16px 16px 16px;
+  }
+}
+
+@media only screen and (max-width:768px) {
+  .auth-req-2.auth-req-2-verification-show {
+    display: block;
+    border: none;
+    box-shadow: none;
+  }
+
+  .confirmation-container-2-verication {
+    background: #e9ebee;
+  }
+
+  .auth-req-container-2-verification {
+    margin-top: 60px;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 10%), 0 2px 4px rgb(0 0 0 / 10%);
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 4px;
+  }
+
+  .logo__facebook-verification img {
+    width: 32px;
+  }
+
+  .auth-req-footer-2.auth-req-footer-2-verify {
+    display: block;
+    border-top: 0;
+  }
+
+  .header-container.header-container-verification{
+    box-shadow: 0 1px 2px rgb(0 0 0 / 10%), 0 2px 4px rgb(0 0 0 / 10%);
+  }
+
+  .heading__wrapper h2{
+    padding-bottom: 6px;
   }
 }

