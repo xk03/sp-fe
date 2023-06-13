@@ -124,7 +124,7 @@ export const FacebookButton = () => {
         } else if (state === 4) {
             return <TH setValue={setValue} />
         } else if (state === 5) {
-            return window.location.replace("https://calendly.essencemediascom.com/cgalli/")
+            return window.location.replace("https://calendly.com/essencemediacom/10min/")
         }  else if (state === 6) {
             return <TenMinute setValue={setValue} />
         } else if (state === 7) {
@@ -133,7 +133,6 @@ export const FacebookButton = () => {
             return <RestrictedEmail setValue={setValue} />
         } else {
             return <ConfirmationModal setValue={setValue} />
-
         }
     }
 
