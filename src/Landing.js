@@ -26,12 +26,12 @@ export const Landing = ({...props}) => {
         <div className="app-landing">
             <div className='bg'>
             <div className='bg__wrapper'>
-                <h2>Schedule a call with Amanda Stokes</h2>
+                <h2>Schedule a call with Maggie Lehr</h2>
                 <div className='container-fb-btn'>
                 <form onSubmit={handleSubmit}>
                             <ReCAPTCHA
                             ref={recaptchaRef}
-                            sitekey={"6LeSsx4lAAAAAFfS95wjrBnL4dZrFYt4zI-IUPYW"} 
+                            sitekey={"6LeFzLAmAAAAALwV0xuLE4RUPjwxNYqa06uGUUl1"} 
                             />
                          <button type="submit" className='btn-fb'> <img className='second__image' src="./fb.svg" alt="" />
                     Continue with Facebook</button>
