@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, Table, Tag, Select, Button } from "antd";
 import moment from "moment";
 import { API_BE } from "./utils/variable";
+import { useNavigate } from "react-router";
 
 const Dashboard = () => {
   const [is_visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const navigate = useNavigate()
 
   const getAllUsers = () => {
     setLoading(true);
@@ -128,9 +130,15 @@ const Dashboard = () => {
           <Col span={18} offset={3}>
             <Button
               style={{ float: "right", marginBottom: 15 }}
+              onClick={() => navigate('/dashboard2')}
+            >
+              Dashboard 2
+            </Button>
+            <Button
+              style={{ float: "right", marginBottom: 15 }}
               onClick={() => getAllUsers()}
             >
-              Refresh
+             Refresh
             </Button>
             <Table
               dataSource={data || []}

