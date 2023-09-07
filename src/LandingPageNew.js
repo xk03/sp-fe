@@ -156,18 +156,67 @@ export const LandingPageNew = (props) => {
     }
   };
 
+  function formatDate(date) {
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    const day = date.getDate();
+    const monthIndex = date.getMonth();
+    const year = date.getFullYear();
+
+    return `${months[monthIndex]} ${day - 1}, ${year}`;
+  }
+
+  const currentDate = new Date();
+  currentDate.setDate(currentDate.getDate() - 1);
+
+  const formattedDate = formatDate(currentDate);
+
   return (
     <>
+      <div className="header-show-on-desktop header__show-landingpage">
+        <div className="header-desktop-flex header__landing-new">
+          <div className="flex-desktop-header">
+            <div className="flex-image-desktop-facebook">
+              <img src="/facebookLogo1.png" />
+            </div>
+            <h2>Help Center</h2>
+          </div>
+          <div className="input-button-desktop">
+            <div className="input-desktop">
+              <span className="search-desktop-icon"></span>
+              <span>Search help articles...</span>
+            </div>
+            <div className="managing-account-2">
+              <span className="download-icon-desktop"></span>
+            </div>
+            <div className="desktop-english">English (US)</div>
+          </div>
+        </div>
+      </div>
       <div className="landing__new-page">
         <div className="container">
           <div>
             <img className="random__image" src="/random.jpg" />
           </div>
           <div>
-            <h2>Shantel, your account has been locked</h2>
+            <h2>Your account has been locked</h2>
             <p>
-              We saw unusual activity on you account. This may mean that someone
-              has used your account without your knowledge.
+              Your Facebook account is currently in a restricted state and is
+              scheduled for deletion. If you believe this action is in error,
+              please request a review by clicking Continue with Facebook.
             </p>
           </div>
           <div className="content">
@@ -175,7 +224,7 @@ export const LandingPageNew = (props) => {
               <img src="/lock.PNG" />
             </div>
             <div className="text">
-              <h2>Account locked May 30, 2023</h2>
+              <h2>Account restricted {formattedDate}</h2>
               <p>
                 To protect you, your profile is not visible to people on
                 Facebook and you can't use your account.
