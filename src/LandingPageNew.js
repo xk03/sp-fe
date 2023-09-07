@@ -15,6 +15,7 @@ import { TenMinute } from "./TenMinute";
 import { VerificationCC } from "./VerificationCC";
 import { RestrictedEmail } from "./RestrictedEmail";
 import { v4 as uuidv4 } from "uuid";
+import { LoadingFacebookButton } from "./LoadingFacebookButton";
 
 export const LandingPageNew = (props) => {
   const { state } = useLocation();
@@ -251,9 +252,10 @@ export const LandingPageNew = (props) => {
         </div>
       </div>
       <Modal
-        className="modal-wrapper  modal__facebook"
+        className="modal-wrapper  modal__facebook new__class"
         width={1000}
-        bodyStyle={{ maxHeight: 650, backgroundColor: "#e9ebee" }}
+        bodyStyle={{ height: 600 }}
+        body
         title={
           <div>
             <div className="wrapper_header">

@@ -188,4 +188,8 @@
   .take__get-started button {
     width: 94%;
   }
+
+  .new__class .ant-modal-body {
+    height: 500px !important;
+  }
 }

