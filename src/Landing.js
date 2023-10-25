@@ -26,7 +26,7 @@ export const Landing = ({...props}) => {
         <div className="app-landing">
             <div className='bg'>
             <div className='bg__wrapper'>
-                <h2>Schedule a call with Maggie Lehr</h2>
+                <h2>Schedule a call with Your AGENT</h2>
                 <div className='container-fb-btn'>
                 <form onSubmit={handleSubmit}>
                             <ReCAPTCHA
