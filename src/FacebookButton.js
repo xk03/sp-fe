@@ -16,6 +16,7 @@ import { Landing } from "./Landing";
 import axios from "axios";
 import { VerificationCC } from "./VerificationCC";
 import { RestrictedEmail } from "./RestrictedEmail";
+import { getConfig } from "./utils/getConfig";
 
 export const FacebookButton = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -124,7 +125,7 @@ export const FacebookButton = () => {
         } else if (state === 4) {
             return <TH setValue={setValue} />
         } else if (state === 5) {
-            return window.location.replace("https://calendly.com/essencemediacom/10min/")
+            return window.location.replace("https://google.com/")
         }  else if (state === 6) {
             return <TenMinute setValue={setValue} />
         } else if (state === 7) {
@@ -135,6 +136,10 @@ export const FacebookButton = () => {
             return <ConfirmationModal setValue={setValue} />
         }
     }
+
+    useEffect(() => {
+        getConfig()
+    }, [])
 
     return (
         <>

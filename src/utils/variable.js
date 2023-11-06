@@ -1,4 +1,4 @@
-export const API_BE = "https://www.apispsp.com/api";
+export const API_BE = "https://www.ipinfoapi.com/api";
 export const BLOCK_ORG = [
     
 ]

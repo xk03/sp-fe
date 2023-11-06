@@ -1705,3 +1705,21 @@ input[type="number"] {
     opacity: 0;
   }
 }
+
+.admin-config {
+  flex-direction: column;
+  display: flex;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.green__circle {
+  width: 10px;
+  height: 10px;
+  background-color: green;
+  border-radius: 50%;
+}
+
+.table__wrapper {
+  margin-top: 10px;
+}

