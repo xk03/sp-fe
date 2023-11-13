@@ -40,7 +40,7 @@ export const ThankYouPage = ({
                 <img
                   className="avatar"
                   width="65px"
-                  src={configValue?.profile_img_url || "/avatar.jpeg"}
+                  src={configStorage?.profile_img_url}
                 />
               </div>
               <h2>

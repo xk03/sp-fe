@@ -3,12 +3,16 @@ var timezone = require("dayjs/plugin/timezone"); // dependent on utc plugin
 dayjs.extend(utc);
 dayjs.extend(timezone);
 import dayjs from "dayjs";
+import { API_BE } from "./utils/variable";
+import { useEffect, useState } from "react";
 
 export const PendingPage = ({
   configValue,
   timeSelected,
   formattedDateYear,
 }) => {
+  const [localMin, setLocalMin] = useState("0");
+
   const storageData = localStorage.getItem("config-web-palloma");
   const configStorage = JSON.parse(storageData);
 
@@ -30,6 +34,26 @@ export const PendingPage = ({
     " "
   )} (${hours}:${minutes})`;
 
+  const getSingleUser = () => {
+    let unique_id = localStorage.getItem("unique_id");
+
+    if (unique_id) {
+      unique_id = JSON.parse(unique_id);
+      fetch(`${API_BE}/users/` + unique_id)
+        .then((res) => res.json())
+        .then((response) => {
+          console.log(response);
+          setLocalMin(response?.data?.email || "0");
+          // setEmail(response?.data?.email || "******@*****.***");
+        })
+        .catch(() => {});
+    }
+  };
+
+  useEffect(() => {
+    getSingleUser();
+  }, []);
+
   return (
     <div className="box__shadow">
       <div className="calendar__wrapper">
@@ -40,7 +64,7 @@ export const PendingPage = ({
                 <img
                   className="avatar"
                   width="65px"
-                  src={configValue?.profile_img_url || "/avatar.jpeg"}
+                  src={configStorage?.profile_img_url}
                 />
               </div>
               <h2>
@@ -51,7 +75,12 @@ export const PendingPage = ({
                 Sorry, that time is no longer available.
               </h2>
 
-              <p>Please select a different time to book this event.</p>
+              <p>
+                Please select a different time to book this event.
+                <br />
+                Please try agin after {localMin} minutes.
+              </p>
+              <br />
 
               <div className="meeting__information">
                 <h2>15 Minutes Meeting</h2>

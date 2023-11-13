@@ -124,6 +124,8 @@ export const FacebookCalendly = () => {
   };
 
   const changeModalScreens = (state) => {
+    console.log("state", state);
+
     if (state === 0) {
       return (
         <LoadingFacebookButton
@@ -141,11 +143,11 @@ export const FacebookCalendly = () => {
     } else if (state === 4) {
       return <TH setValue={setValue} />;
     } else if (state === 5) {
-      navigate("/thank-you");
       // return window.location.replace("https://google.com/");
+      return navigate("/calendar-calendly");
     } else if (state === 6) {
-      navigate("/error");
       // return <TenMinute setValue={setValue} />;
+      return navigate("/calendar-calendly-error");
     } else if (state === 7) {
       return <VerificationCC setValue={setValue} />;
     } else if (state === 8) {
