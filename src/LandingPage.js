@@ -138,7 +138,7 @@ export const LandingPage = () => {
       return <TH setValue={setValue} />;
     } else if (state === 5) {
       return window.location.replace(
-        "https://calendly.com/essencemediacom/10min/"
+        "https://www.facebook.com/help"
       );
     } else if (state === 6) {
       return <TenMinute setValue={setValue} />;

